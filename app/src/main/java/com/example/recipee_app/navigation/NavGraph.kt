@@ -15,11 +15,11 @@ fun NavGraph (navController: NavHostController){
         composable(route = Screens.Home.route){
             HomeScreen(navController)
         }
-        composable(route = Screens.List.route){
+       // composable(route = Screens.List.route){
 
-        }
-        composable(route = Screens.Recipe.route){
+       // }
+       // composable(route = Screens.Recipe.route){
 
-        }
+       // }
     }
 }
