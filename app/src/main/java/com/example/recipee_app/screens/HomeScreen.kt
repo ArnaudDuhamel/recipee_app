@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.recipee_app.R
+import com.example.recipee_app.navigation.Screens
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -50,7 +51,7 @@ fun HomeScreen(navController: NavController) {
                 .padding(top = 5.dp)
                 .fillMaxWidth(0.925f),
             onClick = {
-
+                navController.navigate(Screens.List.route)
             }
         ) {
             Text(
