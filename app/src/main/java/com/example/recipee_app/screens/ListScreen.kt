@@ -6,9 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.selection.toggleable
@@ -53,6 +56,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -79,7 +83,10 @@ fun ListScreen(navController: NavController, model: AppClass) {
                 ),
                 navigationIcon = {
                     IconButton(
-                        onClick = { print("hello") }) {
+                        onClick = {
+                            focusManager.clearFocus();
+                            navController.popBackStack();
+                        }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Localized description"
@@ -130,33 +137,45 @@ fun ListScreen(navController: NavController, model: AppClass) {
             LazyColumn(
                 horizontalAlignment = Alignment.Start
             ) {
-
                 // here the notesList is changed into a list because the itemsIndexed
                 // function takes a list
                 itemsIndexed(model.getRecipesList()) { _, pair ->
-                    Row(
-                        modifier = Modifier
-                            .height(100.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        // This text object contains the list item itself
-                        Image(
-                            painter = painterResource(id = pair.first),
-                            contentDescription = pair.second + " picture",
-                            modifier = Modifier.fillMaxWidth(0.25f)
-                        )
-                        // The checkbox. Great care was take to look as much as possible
-                        // as the presented sketch
-                        Text(
-                            text = pair.second
-                        )
-                    }
 
-                    HorizontalDivider(
-                        thickness = 1.dp
-                    )
+                    drawListElement(pair)
+
                 }
             }
         }
     }
+}
+
+@Composable
+fun drawListElement(pair: Pair<Int,String>) {
+    Row(
+        modifier = Modifier
+            .height(100.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        // This text object contains the list item itself
+        Image(
+            painter = painterResource(id = pair.first),
+            contentDescription = pair.second + " picture",
+            modifier = Modifier
+                .fillMaxWidth(0.25f)
+                .fillMaxHeight(1.0f)
+        )
+
+        Spacer(modifier = Modifier.width(7.5.dp))
+
+        // The checkbox. Great care was take to look as much as possible
+        // as the presented sketch
+        Text(
+            text = pair.second,
+            fontSize = 20.sp
+        )
+    }
+
+    HorizontalDivider(
+        thickness = 1.dp
+    )
 }
