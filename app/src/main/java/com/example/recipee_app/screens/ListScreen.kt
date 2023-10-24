@@ -139,10 +139,20 @@ fun ListScreen(navController: NavController, model: AppClass) {
             ) {
                 // here the notesList is changed into a list because the itemsIndexed
                 // function takes a list
-                itemsIndexed(model.getRecipesList()) { _, pair ->
 
-                    drawListElement(pair)
+                if (inputValue.value.text.isEmpty()) {
+                    itemsIndexed(model.getRecipesList()) { _, pair ->
 
+                        drawListElement(pair)
+
+                    }
+                } else {
+                    itemsIndexed(model.getRecipesList()) { _, pair ->
+
+                        if(pair.second.lowercase().startsWith(inputValue.value.text.lowercase()))
+                        drawListElement(pair)
+
+                    }
                 }
             }
         }
