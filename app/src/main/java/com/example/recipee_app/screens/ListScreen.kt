@@ -89,7 +89,7 @@ fun ListScreen(navController: NavController, model: AppClass) {
                         }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Localized description"
+                            contentDescription = "Icon to go back to main page"
                         )
                     }
                 }
@@ -149,9 +149,9 @@ fun ListScreen(navController: NavController, model: AppClass) {
                 } else {
                     itemsIndexed(model.getRecipesList()) { _, pair ->
 
-                        if(pair.second.lowercase().startsWith(inputValue.value.text.lowercase()))
-                        drawListElement(pair)
-
+                        if(pair.second.lowercase().startsWith(inputValue.value.text.lowercase())){
+                            drawListElement(pair)
+                        }
                     }
                 }
             }
@@ -163,7 +163,12 @@ fun ListScreen(navController: NavController, model: AppClass) {
 fun drawListElement(pair: Pair<Int,String>) {
     Row(
         modifier = Modifier
-            .height(100.dp),
+            .height(100.dp)
+            //.toggleable(
+                //value = checkBoxStates.getValue(pair.first),
+                //onValueChange = { checkBoxStates[pair.first] = it }
+            //)
+                ,
         verticalAlignment = Alignment.CenterVertically
     ) {
         // This text object contains the list item itself
