@@ -2,7 +2,6 @@ package com.example.recipee_app.screens
 
 import android.app.Activity
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,26 +14,21 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.recipee_app.AppClass
-import com.example.recipee_app.R
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -44,9 +38,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.TextStyle
@@ -60,21 +52,32 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.recipee_app.FoodItem
 import com.example.recipee_app.MockAppClass
 import com.example.recipee_app.navigation.Screens
 
+/*
+   This the function for the list page of the application.
+
+   It was asked that the text of each food item be made clickable.
+   But I made the whole row containing the item pictures and text
+   clickable for a better user exeprience.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListScreen(navController: NavController, model: AppClass) {
 
+    //These variables are used to fetch the color of
+    //the system bar and apply it to the application bar
     val view = LocalView.current
     val window = (view.context as Activity).window
 
+    //This is used to remove the focus when back
+    //arrow is clicked
     val focusManager = LocalFocusManager.current
 
+    //This is the variable hodling the input in the search bar
     val inputValue = remember { mutableStateOf(TextFieldValue()) }
 
     Scaffold(
@@ -93,6 +96,9 @@ fun ListScreen(navController: NavController, model: AppClass) {
                     IconButton(
                         onClick = {
                             focusManager.clearFocus()
+                            //a hard coded destination is given to the popBack function
+                            //otherwise a user can click repeatedly and even remove the
+                            //home page
                             navController.popBackStack(route = Screens.Home.route, inclusive = false)
                         }) {
                         Icon(
@@ -107,10 +113,12 @@ fun ListScreen(navController: NavController, model: AppClass) {
             .fillMaxWidth()
     ) { paddingValues ->
 
+        //The list of food items is displayed in this column
         Column(
             verticalArrangement = Arrangement.Top,
             modifier = Modifier.padding(paddingValues)
         ) {
+            //This is the search bar
             TextField(
                 value = inputValue.value,
                 onValueChange = {
@@ -145,9 +153,9 @@ fun ListScreen(navController: NavController, model: AppClass) {
             LazyColumn(
                 horizontalAlignment = Alignment.Start
             ) {
-                // here the notesList is changed into a list because the itemsIndexed
-                // function takes a list
 
+                //This is the search logic. If the search bar is empty,
+                //every item is displayed
                 if (inputValue.value.text.isEmpty()) {
                     itemsIndexed(model.getRecipesList()) { _, food ->
 
@@ -157,6 +165,10 @@ fun ListScreen(navController: NavController, model: AppClass) {
                 } else {
                     itemsIndexed(model.getRecipesList()) { _, food ->
 
+                        //Otherwise, if what is entered in the search bar matches the
+                        //name of a food item, from the beginning of the string, it is displayed
+                        //and no other items
+                        //This creates a live search bar, without needing to click a button
                         if(food.name.lowercase().startsWith(inputValue.value.text.lowercase())){
                             drawListElement(food, navController, model)
                         }
@@ -167,6 +179,14 @@ fun ListScreen(navController: NavController, model: AppClass) {
     }
 }
 
+/*
+  This is the function that draws the different food items of the list
+
+  There is also a reference to the application class in this object because
+  when a row is clicked, the information about the food item is placed into
+  a variable called currentFood. And the third page displays on the screen
+  the information in that variable
+*/
 @Composable
 fun drawListElement(food: FoodItem, navController: NavController, model: AppClass) {
 
@@ -180,7 +200,7 @@ fun drawListElement(food: FoodItem, navController: NavController, model: AppClas
                        },
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // This text object contains the list item itself
+
         Image(
             painter = painterResource(id = food.picture),
             contentDescription = food.name + " picture",
@@ -191,8 +211,6 @@ fun drawListElement(food: FoodItem, navController: NavController, model: AppClas
 
         Spacer(modifier = Modifier.width(7.5.dp))
 
-        // The checkbox. Great care was take to look as much as possible
-        // as the presented sketch
         Text(
             text = food.name,
             fontSize = 20.sp
@@ -204,6 +222,17 @@ fun drawListElement(food: FoodItem, navController: NavController, model: AppClas
     )
 }
 
+/*
+    This is the function used to preview the list page, everything related
+    to the context is removed because the preview environment cannot handle it.
+
+    The reference to the View Model is removed because the preview environment
+    also cannot handle it.
+
+    So the reference to the application class is replaced by a reference to
+    a replica of the application class that does not use the View Model class
+    and does not use context to retrieve string ressources
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MockListScreen(navController: NavController, model: MockAppClass) {
@@ -293,6 +322,11 @@ fun MockListScreen(navController: NavController, model: MockAppClass) {
     }
 }
 
+/*
+   Also here, the reference to the application class is replaced by another
+   class that does not use the View Model class and does not use context to
+   retrieve string resources
+ */
 @Composable
 fun MockdrawListElement(food: FoodItem, navController: NavController, model: MockAppClass) {
 
@@ -330,6 +364,10 @@ fun MockdrawListElement(food: FoodItem, navController: NavController, model: Moc
     )
 }
 
+/*
+   This is the preview function that calls the mock function,
+   the function that can actually be displayed
+*/
 @Preview(showBackground = true)
 @Composable
 fun ListScreenPreview() {
