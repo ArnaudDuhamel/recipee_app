@@ -3,6 +3,7 @@ package com.example.recipee_app.screens
 import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -57,6 +58,8 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import com.example.recipee_app.Ingredient
+import com.example.recipee_app.navigation.Screens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -141,16 +144,16 @@ fun ListScreen(navController: NavController, model: AppClass) {
                 // function takes a list
 
                 if (inputValue.value.text.isEmpty()) {
-                    itemsIndexed(model.getRecipesList()) { _, pair ->
+                    itemsIndexed(model.getRecipesList()) { _, food ->
 
-                        drawListElement(pair)
+                        drawListElement(food, navController, model)
 
                     }
                 } else {
-                    itemsIndexed(model.getRecipesList()) { _, pair ->
+                    itemsIndexed(model.getRecipesList()) { _, food ->
 
-                        if(pair.second.lowercase().startsWith(inputValue.value.text.lowercase())){
-                            drawListElement(pair)
+                        if(food.name.lowercase().startsWith(inputValue.value.text.lowercase())){
+                            drawListElement(food, navController, model)
                         }
                     }
                 }
@@ -160,21 +163,22 @@ fun ListScreen(navController: NavController, model: AppClass) {
 }
 
 @Composable
-fun drawListElement(pair: Pair<Int,String>) {
+fun drawListElement(food: Ingredient, navController: NavController, model: AppClass) {
+
     Row(
         modifier = Modifier
             .height(100.dp)
-            //.toggleable(
-                //value = checkBoxStates.getValue(pair.first),
-                //onValueChange = { checkBoxStates[pair.first] = it }
-            //)
-                ,
+            .fillMaxWidth(1.0f)
+            .clickable {
+                model.setFoodVariable(food)
+                navController.navigate(Screens.Recipe.route)
+                       },
         verticalAlignment = Alignment.CenterVertically
     ) {
         // This text object contains the list item itself
         Image(
-            painter = painterResource(id = pair.first),
-            contentDescription = pair.second + " picture",
+            painter = painterResource(id = food.picture),
+            contentDescription = food.name + " picture",
             modifier = Modifier
                 .fillMaxWidth(0.25f)
                 .fillMaxHeight(1.0f)
@@ -185,7 +189,7 @@ fun drawListElement(pair: Pair<Int,String>) {
         // The checkbox. Great care was take to look as much as possible
         // as the presented sketch
         Text(
-            text = pair.second,
+            text = food.name,
             fontSize = 20.sp
         )
     }

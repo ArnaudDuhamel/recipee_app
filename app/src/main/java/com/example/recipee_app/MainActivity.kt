@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.recipee_app.ui.theme.Recipee_appTheme
@@ -25,7 +26,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    NavGraph(navController = navController)
+                    val context = LocalContext.current
+                    val appForClass = AppClass(context)
+                    NavGraph(navController = navController, appClass = appForClass)
                 }
             }
         }

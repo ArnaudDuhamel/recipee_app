@@ -1,33 +1,46 @@
 package com.example.recipee_app
 
+import android.content.Context
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import android.content.res.Resources
 import kotlin.properties.Delegates
 
-class AppClass : ViewModel() {
+class AppClass(context: Context) : ViewModel() {
 
     private val recipesList = mutableStateListOf<Ingredient>()
 
-    private var foodPicture by Delegates.notNull<Int>()
-
-    private var foodName by Delegates.notNull<String>()
-
-    private var foodText by Delegates.notNull<String>()
+    private var currentFood by Delegates.notNull<Ingredient>()
 
     init {
+        val resources = context.resources
         recipesList.add(Ingredient(R.drawable.cabbage,"Cabbage",
-            Resources.getSystem().getString(R.string.cabbage_description)
+            resources.getString(R.string.cabbage_description)
         ))
         recipesList.add(Ingredient(R.drawable.garlic,"Garlic",
-            Resources.getSystem().getString(R.string.garlic_description)))
-        recipesList.add(Pair(R.drawable.ginger,"Ginger"))
-        recipesList.add(Pair(R.drawable.pepper,"Pepper"))
-        recipesList.add(Pair(R.drawable.rice,"Rice"))
+           resources.getString(R.string.garlic_description)
+        ))
+        recipesList.add(Ingredient(R.drawable.ginger,"Ginger",
+            resources.getString(R.string.ginger_description)
+        ))
+        recipesList.add(Ingredient(R.drawable.pepper,"Pepper",
+            resources.getString(R.string.pepper_description)
+        ))
+        recipesList.add(Ingredient(R.drawable.rice,"Rice",
+            resources.getString(R.string.rice_description)
+        ))
     }
 
-    fun getRecipesList(): List<Pair<Int, String>> {
+    fun getRecipesList(): List<Ingredient> {
         return recipesList
+    }
+
+    fun getFoodVariable(): Ingredient {
+        return currentFood
+    }
+
+    fun setFoodVariable(food: Ingredient){
+        currentFood = food
     }
 
 }

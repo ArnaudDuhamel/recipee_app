@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.example.recipee_app.AppClass
 import com.example.recipee_app.screens.HomeScreen
 import com.example.recipee_app.screens.ListScreen
+import com.example.recipee_app.screens.RecipeScreen
 
 @Composable
 fun NavGraph (navController: NavHostController, appClass: AppClass = viewModel()){
@@ -22,8 +23,8 @@ fun NavGraph (navController: NavHostController, appClass: AppClass = viewModel()
         composable(route = Screens.List.route){
             ListScreen(navController, appClass)
         }
-       // composable(route = Screens.Recipe.route){
-
-       // }
+        composable(route = Screens.Recipe.route){
+            RecipeScreen(navController, appClass)
+       }
     }
 }
