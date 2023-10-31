@@ -5,12 +5,20 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import kotlin.properties.Delegates
 
+/*
+   This is the class in which the data for the application is stored
+ */
 open class AppClass(context: Context) : ViewModel() {
 
+    //This is where the data for each food item is stored.
     private val recipesList = mutableStateListOf<FoodItem>()
 
+    //This is the variable that contains the information of the food
+    //item to be displayed in the third page
     private var currentFood by Delegates.notNull<FoodItem>()
 
+    // The constructor that initiates the list. Everything is
+    // hard coded. No API was used.
     init {
         val resources = context.resources
         recipesList.add(FoodItem(R.drawable.cabbage,"Cabbage",
@@ -44,6 +52,13 @@ open class AppClass(context: Context) : ViewModel() {
 
 }
 
+/*
+   This class is a copy of the class above. But it does not
+   inherit the View Model class and it does not use context.
+
+   This is class is used to be able to preview the different pages
+   of the application
+ */
 class MockAppClass {
 
     private val recipesList = mutableStateListOf<FoodItem>()
@@ -85,4 +100,8 @@ class MockAppClass {
 
 }
 
+/*
+   This is a data class used to store the information related to
+   each food item.
+ */
 data class FoodItem(val picture: Int, val name: String, val text: String)

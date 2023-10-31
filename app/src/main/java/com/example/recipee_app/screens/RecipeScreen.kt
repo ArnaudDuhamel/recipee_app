@@ -2,17 +2,14 @@ package com.example.recipee_app.screens
 
 import android.app.Activity
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -32,7 +29,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,9 +38,20 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.recipee_app.AppClass
 import com.example.recipee_app.MockAppClass
-import com.example.recipee_app.R
 import com.example.recipee_app.navigation.Screens
 
+/*
+   This is the function for the third page of the application displaying
+   the name of the food item, its picture, a description and some recipes with
+   the food item.
+
+   This function always displays the information in the currentFood variable of
+   the application class, it is the second page that is in charge of putting the
+   information of the right food item in the currentFood variable.
+
+   This was done to allow the second page to transfer information to the third
+   page.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeScreen(navController: NavController, model: AppClass){
@@ -106,6 +113,9 @@ fun RecipeScreen(navController: NavController, model: AppClass){
                     .fillMaxWidth(0.92f)
             )
             Spacer(
+                //in this page, because the column was scrollable,
+                //absolute values have been used instead of a percentage
+                //of the container. Otherwise it was not working
                 modifier = Modifier
                     .height(15.dp)
             )
@@ -139,7 +149,11 @@ fun RecipeScreen(navController: NavController, model: AppClass){
     }
 }
 
-
+/*
+   This is the function used for the preview. The reference to the
+   main application class is replaced with a class that does not use
+   the View Model class and that does not use context.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MockRecipeScreen(navController: NavController, model: MockAppClass){
@@ -225,6 +239,9 @@ fun MockRecipeScreen(navController: NavController, model: MockAppClass){
     }
 }
 
+/*
+   This is the function previewing the third page of the application
+ */
 @Preview(showBackground = true)
 @Composable
 fun RecipeScreenPreview() {

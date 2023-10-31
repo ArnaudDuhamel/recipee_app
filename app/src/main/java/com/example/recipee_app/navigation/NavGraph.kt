@@ -11,8 +11,18 @@ import com.example.recipee_app.screens.HomeScreen
 import com.example.recipee_app.screens.ListScreen
 import com.example.recipee_app.screens.RecipeScreen
 
+/*
+Navigation graph to navigate between the different pages.
+
+It has a Navigation controller that creates the navigation stack
+and actually allows the navigation
+
+It also contains an AppClass, which is the main class used by the
+application to store information
+*/
+
 @Composable
-fun NavGraph (navController: NavHostController, appClass: AppClass = viewModel()){
+fun NavGraph (navController: NavHostController, appClass: AppClass){
     NavHost(
         navController = navController,
         startDestination = Screens.Home.route)

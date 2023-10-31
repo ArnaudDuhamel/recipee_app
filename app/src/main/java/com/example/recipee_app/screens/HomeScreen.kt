@@ -25,6 +25,15 @@ import androidx.navigation.compose.rememberNavController
 import com.example.recipee_app.R
 import com.example.recipee_app.navigation.Screens
 
+/*
+  This is the application for the home page.
+
+  Each function for each page has a Navigation Controller
+  parameter to allow for the navigation in the application.
+
+  But there is only one navigation controller object created
+  for the whole app
+*/
 @Composable
 fun HomeScreen(navController: NavController) {
     Column(
@@ -47,6 +56,9 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxHeight(0.03f)
         )
+        //Here a clickable text could have been used
+        //but I thought that using a button was more
+        //intuitive for users
         Button(
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier
@@ -68,6 +80,12 @@ fun HomeScreen(navController: NavController) {
     }
 }
 
+/*
+  This is the preview function for the home page.
+
+  Litterally the same function has been used as above,
+  which is not the case for the other pages.
+ */
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
