@@ -12,6 +12,4 @@ As of November 16, 2023, it can be run as is in Android Studio.
 <br>
 <img width="198" alt="demo_search" src="https://github.com/ArnaudDuhamel/recipee_app/assets/113102976/d3c8dcd9-5276-49f4-8775-b6a68c48f936">
 <br>
-<img width="196" alt="task_1_2_emulator_search" src="https://github.com/ArnaudDuhamel/recipee_app/assets/113102976/79e56a98-b20c-4991-b771-1284f7f672d2">
-<br>
 <img width="195" alt="task_1_3_emulator" src="https://github.com/ArnaudDuhamel/recipee_app/assets/113102976/d532b5ac-7a7c-49ce-956b-c54bf4cb9645">
