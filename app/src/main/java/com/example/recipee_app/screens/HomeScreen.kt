@@ -47,7 +47,7 @@ fun HomeScreen(navController: NavController) {
                 .fillMaxHeight(0.025f)
         )
         Image(
-            painter = painterResource(id = R.drawable.gordon_ramsay_portrait),
+            painter = painterResource(id = R.drawable.model_picture),
             contentDescription = stringResource(R.string.portrait_picture_of_gordon_ramsay),
             modifier = Modifier
                 .fillMaxWidth(0.95f)
@@ -69,7 +69,7 @@ fun HomeScreen(navController: NavController) {
             }
         ) {
             Text(
-                text = "Gordon Ramsay",
+                text = "Food list",
                 modifier = Modifier
                     .padding(top = 5.dp,
                             bottom = 9.dp),
