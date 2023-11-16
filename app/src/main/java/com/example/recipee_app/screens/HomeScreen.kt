@@ -58,7 +58,7 @@ fun HomeScreen(navController: NavController) {
         )
         //Here a clickable text could have been used
         //but I thought that using a button was more
-        //intuitive for users
+        //intuitive for the users
         Button(
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier
