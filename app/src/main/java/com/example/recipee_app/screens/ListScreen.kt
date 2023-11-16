@@ -85,7 +85,7 @@ fun ListScreen(navController: NavController, model: AppClass) {
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = "Gordon's food list",
+                        text = "Food list",
                         fontWeight = FontWeight.Bold,
                     )
                 },
