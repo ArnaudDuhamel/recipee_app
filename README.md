@@ -2,6 +2,8 @@
 
 This application was created for an assignment in the course mobile programming in the bachelor of programming at the Norwegian University of Science and Technology, cohort 2021.
 
+Before the application was referring to Gordon Ramsay and there was a picture of him in the application. This has been removed for the open source version.
+
 As of November 16, 2023, it can be run as is in Android Studio.
 
 # Demo
