@@ -1,4 +1,4 @@
-# An Android temperature converter application
+# An Android demo recipee application
 
 This application was created for an assignment in the course mobile programming in the bachelor of programming at the Norwegian University of Science and Technology, cohort 2021.
 
